@@ -14,17 +14,15 @@ format:
 output: 
   revealjs::revealjs_presentation:
 title-slide-attributes:
-  data-background-image: background.png
+  data-background-image: background_2.png
   data-background-size: cover
 ---
+## Datasets
 ```{css}
 .scrollable::-webkit-scrollbar {
   display: none;
 }
 ```
-
-## Datasets
-
 PTB-XL
 
 ![](images/ptb-xl.png) Code-15%![](images/code-15.png)
