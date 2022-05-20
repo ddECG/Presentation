@@ -9,12 +9,19 @@ format:
     transition: slide
     logo: images/logo.png
     background-transition: fade
+    preview-links: auto
+
 output: 
   revealjs::revealjs_presentation:
 title-slide-attributes:
   data-background-image: background.png
   data-background-size: cover
 ---
+```{css}
+.scrollable::-webkit-scrollbar {
+  display: none;
+}
+```
 
 ## Datasets
 
@@ -34,8 +41,9 @@ Difference in accuracy between:
 
 -   New model
 
-## Training
-
+## Training {.smaller .scrollable transition="slide"}
+::: {.panel-tabset}
+### Plot
 ```{r}
 library(magrittr)
 df <- readRDS("data/df_history.rds")
@@ -67,8 +75,16 @@ train_combined <- df %>%
 gganimate::animate(train_combined, duration = 30, start_pause = 10, end_pause = 60)
 ```
 
-## Prediction
+### Data
+```{r}
+knitr::kable(df)
 
+
+```
+:::
+## Prediction {.smaller .scrollable transition="slide"}
+::: {.panel-tabset}
+### Plot
 ```{r}
 library(magrittr)
 df <- readRDS("data/df_predictions.rds")
@@ -77,11 +93,16 @@ df %>%
     ggplot2::geom_boxplot() +
     ggplot2::ylab("Accuracy (Error percentage)") +
     ggplot2::xlab("Model")
-
 ```
 
+### Data
+```{r}
+knitr::kable(df)
+```
+::: 
 # More...
 
 Application - Predict age from ECG
 
-Open source - Github
+Source code - [Github](https://github.com/ddECG)
+

@@ -18,7 +18,8 @@ df_pred_original <- readr::read_csv("data-raw/ptbxl_preditions_original.csv")
 df_history <- dplyr::bind_rows(df_history_tune, df_history_new, .id = "dataset") %>%
     dplyr::mutate(dataset = dplyr::case_when(
         dataset == "1" ~ "Tune",
-        dataset == "2" ~ "New"))
+        dataset == "2" ~ "New")) %>%
+    dplyr::mutate(epoch = epoch + 1)
 
 df_predictions <- dplyr::bind_rows(df_pred_tune, 
                                    df_pred_new,
