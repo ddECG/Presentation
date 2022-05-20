@@ -1,0 +1,153 @@
+# Data visualizations 
+
+## 1. Load data
+
+```{r}
+# History
+df_history_tune <- readr::read_csv("data-raw/history_tune.csv")
+df_history_new <- readr::read_csv("data-raw/history_new.csv")
+
+# Predictions
+df_pred_tune <- readr::read_csv("data-raw/ptbxl_preditions_tune.csv")
+df_pred_new <- readr::read_csv("data-raw/ptbxl_preditions_new.csv")
+df_pred_original <- readr::read_csv("data-raw/ptbxl_preditions_original.csv")
+```
+
+## Bind data
+
+```{r}
+df_history <- dplyr::bind_rows(df_history_tune, df_history_new, .id = "dataset") %>%
+    dplyr::mutate(dataset = dplyr::case_when(
+        dataset == "1" ~ "Tune",
+        dataset == "2" ~ "New"))
+
+df_predictions <- dplyr::bind_rows(df_pred_tune, 
+                                   df_pred_new,
+                                   df_pred_original,
+                                   .id = "dataset") %>%
+    dplyr::mutate(dataset = dplyr::case_when(
+        dataset == "1" ~ "Tune",
+        dataset == "2" ~ "New",
+        dataset == "3" ~ "Original"))
+```
+
+## 3. Calculate accuracy
+
+```{r}
+df_predictions <- df_predictions %>%
+    dplyr::mutate(difference = abs(true_age - predicted_age)) %>%
+    dplyr::mutate(error = (difference / true_age) * 100) %>%
+    dplyr::mutate(accuracy = 100 - error)
+
+```
+
+## 3. Visualize data
+
+### Training
+
+```{r}
+df_history %>%
+    ggplot2::ggplot(ggplot2::aes(x = epoch, y = valid_error, color = dataset)) +
+    ggplot2::geom_line() +
+    ggplot2::ylab("Accuracy (Error percentage)") +
+    ggplot2::xlab("Epoch")
+
+```
+
+### Animation
+
+```{r}
+train_combined <- df_history %>%
+    ggplot2::ggplot(ggplot2::aes(x = epoch, y = valid_error, color = dataset)) +
+    ggplot2::geom_line(size = .6) +
+    ggplot2::geom_segment(ggplot2::aes(xend=max(epoch), 
+                                       yend = valid_error),
+                                       linetype = 2) +
+    ggplot2::geom_text(ggplot2::aes(x = max(epoch) + .1, 
+                                    label = sprintf("%5.0f", valid_error)),
+                       hjust = 0,
+                       label.size = 100) +
+    ggplot2::labs(title = "Training accuracy",
+                  subtitle = 'Epoch: {round(frame_along, 0)} ', 
+                  y = 'Accuracy (Error percentage)', 
+                  x = 'Epoch') +
+    ggplot2::theme_bw() +
+    ggplot2::expand_limits(x = c(0, 70)) +
+    ggplot2::theme(panel.border = element_blank(),
+                       axis.line = element_line(colour = "black")) +
+    gganimate::transition_reveal(epoch) +
+    gganimate::view_follow(fixed_y = T) +
+    ggplot2::theme(text = ggplot2::element_text(color = "#22211d"),
+                   plot.title = ggplot2::element_text(size=20),
+                   plot.subtitle = ggplot2::element_text(size=15, 
+                                                         color = "#4e4d47"))
+
+train_combined_gif <- gganimate::animate(train_combined, duration=30, end_pause = 60)
+
+# Seperate gifs
+train_tune <- df_history %>%
+    dplyr::filter(dataset == "Tune") %>%
+    ggplot2::ggplot(ggplot2::aes(x = epoch, y = valid_error)) +
+    ggplot2::geom_line(size = .6, color = "#619CFF") +
+    ggplot2::geom_segment(ggplot2::aes(xend=max(epoch), 
+                                       yend = valid_error),
+                                       linetype = 2,
+                          color = "#619CFF") +
+    ggplot2::geom_text(ggplot2::aes(x = max(epoch) + .1, 
+                                    label = sprintf("%5.0f", valid_error)),
+                       hjust = 0,
+                       color = "#619CFF") +
+    ggplot2::labs(title = "Training accuracy",
+                  subtitle = 'Epoch: {round(frame_along, 0)} ', 
+                  y = 'Accuracy (Error percentage)', 
+                  x = 'Epoch') +
+    ggplot2::theme_bw() +
+    ggplot2::expand_limits(x = c(0, 70)) +
+    ggplot2::theme(panel.border = element_blank(),
+                       axis.line = element_line(colour = "black")) +
+    gganimate::transition_reveal(epoch) +
+    gganimate::view_follow(fixed_y = T) +
+    ggplot2::theme(text = ggplot2::element_text(color = "#22211d"),
+                   plot.title = ggplot2::element_text(size=20),
+                   plot.subtitle = ggplot2::element_text(size=15, 
+                                                         color = "#4e4d47"))
+
+train_new <- df_history %>%
+    dplyr::filter(dataset == "New") %>%
+    ggplot2::ggplot(ggplot2::aes(x = epoch, y = valid_error)) +
+    ggplot2::geom_line(size = .6, color = "#F8766D") +
+    ggplot2::geom_segment(ggplot2::aes(xend=max(epoch), 
+                                       yend = valid_error),
+                                       linetype = 2,
+                          color = "#F8766D") +
+    ggplot2::geom_text(ggplot2::aes(x = max(epoch) + .1, 
+                                    label = sprintf("%5.0f", valid_error)),
+                       hjust = 0,
+                       color = "#F8766D") +
+    ggplot2::labs(title = "Training accuracy",
+                  subtitle = 'Epoch: {round(frame_along, 0)} ', 
+                  y = 'Accuracy (Error percentage)', 
+                  x = 'Epoch') +
+    ggplot2::theme_bw() +
+    ggplot2::expand_limits(x = c(0, 70)) +
+    ggplot2::theme(panel.border = element_blank(),
+                       axis.line = element_line(colour = "black")) +
+    gganimate::transition_reveal(epoch) +
+    gganimate::view_follow(fixed_y = T) +
+    ggplot2::theme(text = ggplot2::element_text(color = "#22211d"),
+                   plot.title = ggplot2::element_text(size=20),
+                   plot.subtitle = ggplot2::element_text(size=15, 
+                                                         color = "#4e4d47"))
+
+
+```
+
+### Predictions
+
+```{r}
+df_predictions %>%
+    ggplot2::ggplot(ggplot2::aes(x = dataset, y = error)) +
+    ggplot2::geom_boxplot() +
+    ggplot2::ylab("Accuracy (Error percentage)") +
+    ggplot2::xlab("Model")
+```

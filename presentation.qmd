@@ -1,0 +1,87 @@
+---
+title: "Transfer Learning"
+author: "Thor Larsen & Anders Askeland"
+format:
+  revealjs:
+    slide-number: true
+    theme: simple
+    controls : true
+    transition: slide
+    logo: images/logo.png
+    background-transition: fade
+output: 
+  revealjs::revealjs_presentation:
+title-slide-attributes:
+  data-background-image: background.png
+  data-background-size: cover
+---
+
+## Datasets
+
+PTB-XL
+
+![](images/ptb-xl.png) Code-15%![](images/code-15.png)
+
+## Residual neural network
+
+# Results from training and prediction
+
+Difference in accuracy between:
+
+-   Fine-tuned model
+
+-   Original model
+
+-   New model
+
+## Training
+
+```{r}
+library(magrittr)
+df <- readRDS("data/df_history.rds")
+
+train_combined <- df %>%
+    ggplot2::ggplot(ggplot2::aes(x = epoch, y = valid_error, color = dataset)) +
+    ggplot2::geom_line(size = .6) +
+    ggplot2::geom_segment(ggplot2::aes(xend=max(epoch), 
+                                       yend = valid_error),
+                                       linetype = 2) +
+    ggplot2::geom_text(ggplot2::aes(x = max(epoch) + .1, 
+                                    label = sprintf("%5.0f", valid_error)),
+                       hjust = 0) +
+    ggplot2::labs(title = "Training accuracy",
+                  subtitle = 'Epoch: {round(frame_along, 0)} ', 
+                  y = 'Accuracy (Error percentage)', 
+                  x = 'Epoch') +
+    ggplot2::theme_bw() +
+    ggplot2::expand_limits(x = c(0, 70)) +
+    ggplot2::theme(panel.border = ggplot2::element_blank(),
+                       axis.line = ggplot2::element_line(colour = "black")) +
+    gganimate::transition_reveal(epoch) +
+    gganimate::view_follow(fixed_y = T) +
+    ggplot2::theme(text = ggplot2::element_text(color = "#22211d"),
+                   plot.title = ggplot2::element_text(size=20),
+                   plot.subtitle = ggplot2::element_text(size=15, 
+                                                         color = "#4e4d47"))
+
+gganimate::animate(train_combined, duration = 30, start_pause = 10, end_pause = 60)
+```
+
+## Prediction
+
+```{r}
+library(magrittr)
+df <- readRDS("data/df_predictions.rds")
+df %>%
+    ggplot2::ggplot(ggplot2::aes(x = dataset, y = error)) +
+    ggplot2::geom_boxplot() +
+    ggplot2::ylab("Accuracy (Error percentage)") +
+    ggplot2::xlab("Model")
+
+```
+
+# More...
+
+Application - Predict age from ECG
+
+Open source - Github
