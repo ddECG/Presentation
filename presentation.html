@@ -28780,16 +28780,41 @@
 </div>
 </div>
 </div>
+<h3 id="models-architecture">Model’s architecture</h3>
 </section></section>
-<section id="more" class="title-slide slide level1 center">
-<h1>More…</h1>
-<p>Predict age from ECG - Application</p>
-<p>Source code - <a href="https://github.com/ddECG">Github</a></p>
-
-<img src="images/logo.png" class="slide-logo r-stretch"><div class="footer footer-default">
-
-</div>
+<section>
+<section id="predict-age-from-ecg---application" class="title-slide slide level1 center">
+<h1>Predict age from ECG - Application</h1>
+<p>TODO: Insert image/lima_deep_2021.png and image/he_deep_2015.png image side by side</p>
+<ul>
+<li>By using a residual neural network we get a well performing model</li>
+<li>Convolution to create a feature map</li>
+<li>Batch normalization and ReLUs to decrease computational complexity</li>
+<li>Dropout of learned features (activations) in layers to decrease overfitting</li>
+<li>Skip connection with max pooling to add most prominent residuals from features</li>
+<li>Linear layer in the end to map to prediction</li>
+<li>ADAM optimizer</li>
+</ul>
 </section>
+<h3 id="transfer-learning">Transfer learning</h3>
+<p>TODO: Insert image/ribeiro_automatic_2020.png</p>
+<ul>
+<li>Re-use same neural network architecture and what the former models learned</li>
+<li>Continue training to fine tune and optimize weights</li>
+<li>Recap: Developed and improved this on age prediction using author’s model and weights</li>
+<li>In dev: exchange linear layer with dense layer and sigmoid</li>
+<li>In dev: predict cardio vascular complications using same neural network and what it learned</li>
+<li>In dev: use on third dataset with ECGs for patients with diabetes complications</li>
+</ul>
+<h3 id="application-and-use-case">Application and use case</h3>
+<p>Application - Predict age from ECG with residual neural network (500hz ECGs from Code-15% finetuned on PTB-XL)</p>
+<p>Application in development - Use same model and transfer learning to predict cardiovascular complications related to diabetes</p>
+<h3 id="find-the-code-experiment-contribute">Find the code, experiment, contribute!</h3>
+<p>Source code - <a href="https://github.com/ddECG">Github</a></p>
+<p><img src="images/logo.png" class="slide-logo"></p>
+<div class="footer footer-default">
+
+</div></section>
     </div>
   </div>
 

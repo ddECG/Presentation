@@ -4,12 +4,12 @@
   <meta name="generator" content="quarto-0.9.399">
 
   <meta name="author" content="Thor Larsen &amp; Anders Askeland">
-  <title>Transfer Learning</title>
+  <title>Transfer Learning to Predict Age</title>
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
-  <link rel="stylesheet" href="presentation_files/libs/revealjs/dist/reset.css">
-  <link rel="stylesheet" href="presentation_files/libs/revealjs/dist/reveal.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reset.css">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/reveal.css">
   <style>
     code{white-space: pre-wrap;}
     span.smallcaps{font-variant: small-caps;}
@@ -18,18 +18,18 @@
     div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
     ul.task-list{list-style: none;}
   </style>
-  <link rel="stylesheet" href="presentation_files/libs/revealjs/dist/theme/quarto.css" id="theme">
-  <script src="presentation_files/libs/clipboard/clipboard.min.js"></script>
-  <script src="presentation_files/libs/quarto-html/tabby.min.js"></script>
-  <script src="presentation_files/libs/quarto-html/popper.min.js"></script>
-  <script src="presentation_files/libs/quarto-html/tippy.umd.min.js"></script>
-  <link href="presentation_files/libs/quarto-html/tippy.css" rel="stylesheet">
-  <link href="presentation_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet">
-  <link id="quarto-text-highlighting-styles" href="presentation_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
-  <link href="presentation_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
-  <link href="presentation_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
-  <link href="presentation_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
-  <link href="presentation_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
+  <link rel="stylesheet" href="index_files/libs/revealjs/dist/theme/quarto.css" id="theme">
+  <script src="index_files/libs/clipboard/clipboard.min.js"></script>
+  <script src="index_files/libs/quarto-html/tabby.min.js"></script>
+  <script src="index_files/libs/quarto-html/popper.min.js"></script>
+  <script src="index_files/libs/quarto-html/tippy.umd.min.js"></script>
+  <link href="index_files/libs/quarto-html/tippy.css" rel="stylesheet">
+  <link href="index_files/libs/quarto-html/quarto-html.min.css" rel="stylesheet">
+  <link id="quarto-text-highlighting-styles" href="index_files/libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.css" rel="stylesheet">
+  <link href="index_files/libs/revealjs/plugin/quarto-support/footer.css" rel="stylesheet">
   <style type="text/css">
 
   .callout {
@@ -319,8 +319,8 @@
   <div class="reveal">
     <div class="slides">
 
-<section id="title-slide" data-background-image="background_2.png" data-background-size="cover" class="center">
-  <h1 class="title">Transfer Learning</h1>
+<section id="title-slide" data-background-image="background.png" data-background-size="cover" class="center">
+  <h1 class="title">Transfer Learning to Predict Age</h1>
   <p class="author">Thor Larsen &amp; Anders Askeland</p>
 </section>
 
@@ -334,30 +334,33 @@
 </style>
 </div>
 <p>PTB-XL</p>
-<p><img data-src="images/ptb-xl.png"> Code-15%<img data-src="images/code-15.png"></p>
+<p><img data-src="images/ptb-xl.png"> Code-15% <img data-src="images/code-15.png"></p>
 </section>
 <section id="residual-neural-network" class="slide level2">
-<h2>Residual neural network</h2>
-</section>
+<h2>Residual neural network <sup>1</sup></h2>
+
+<img data-src="images/ribeiro_automatic_2020.png" class="r-stretch"><aside><ol class="aside-footnotes"><li id="fn1" role="doc-endnote"><p><a href="https://github.com/antonior92/ecg-age-prediction"><em>Lima et. al.</em></a></p></li></ol></aside></section>
+<section id="transfer-learning" class="slide level2">
+<h2>Transfer learning<sup>1</sup></h2>
+
+<img data-src="images/he_deep_2015.png" class="r-stretch"><aside><ol class="aside-footnotes"><li id="fn2" role="doc-endnote"><p><a href="https://github.com/antonior92/ecg-age-prediction"><em>Lima et. al.</em></a></p></li></ol></aside></section>
 <section>
-<section id="results-from-training-and-prediction" class="title-slide slide level1 center">
-<h1>Results from training and prediction</h1>
-<p>Difference in accuracy between:</p>
-<ul>
-<li><p>Fine-tuned model</p></li>
-<li><p>Original model</p></li>
-<li><p>New model</p></li>
-</ul>
+<section id="predict-age" class="title-slide slide level1 center">
+<h1>Predict age</h1>
+<ol type="1">
+<li>Training</li>
+<li>Prediction</li>
+</ol>
 </section>
-<section id="training" class="slide level2 smaller scrollable" data-transition="slide">
-<h2>Training</h2>
+<section id="training-results" class="slide level2 smaller scrollable" data-transition="slide">
+<h2>Training results</h2>
 <div class="panel-tabset">
 <ul id="tabset-1" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-1-1">Plot</a></li><li><a href="#tabset-1-2">Data</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1">
 <div class="cell">
 <div class="cell-output-display">
-<p><img data-src="presentation_files/figure-revealjs/unnamed-chunk-2-1.gif"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-2-1.gif"></p>
 </div>
 </div>
 </div>
@@ -1817,15 +1820,15 @@
 </div>
 </div>
 </section>
-<section id="prediction" class="slide level2 smaller scrollable" data-transition="slide">
-<h2>Prediction</h2>
+<section id="prediction-results" class="slide level2 smaller scrollable" data-transition="slide">
+<h2>Prediction results</h2>
 <div class="panel-tabset">
 <ul id="tabset-2" class="panel-tabset-tabby"><li><a data-tabby-default="" href="#tabset-2-1">Plot</a></li><li><a href="#tabset-2-2">Data</a></li></ul>
 <div class="tab-content">
 <div id="tabset-2-1">
 <div class="cell">
 <div class="cell-output-display">
-<p><img data-src="presentation_files/figure-revealjs/unnamed-chunk-4-1.png" width="960"></p>
+<p><img data-src="index_files/figure-revealjs/unnamed-chunk-4-1.png" width="960"></p>
 </div>
 </div>
 </div>
@@ -28783,30 +28786,71 @@
 </section></section>
 <section id="more" class="title-slide slide level1 center">
 <h1>More…</h1>
-<p>Application - Predict age from ECG</p>
-<p>Source code - <a href="https://github.com/ddECG">Github</a></p>
+<ul>
+<li><a href="https://github.com/ddECG/ECG-Predictor">Simple application to predict age from ECG</a></li>
+<li><a href="https://github.com/ddECG/Presentation">This presentation</a></li>
+<li><a href="https://github.com/ddECG">Open source</a></li>
+</ul>
+</section>
+
+<section>
+<section id="read-more" class="title-slide slide level1 center">
+<h1>Read more</h1>
+
+</section>
+<section id="models-architecture" class="slide level2">
+<h2>Model’s architecture</h2>
+<ul>
+<li>By using a residual neural network we get a well performing model</li>
+<li>Convolution to create a feature map</li>
+<li>Batch normalization and ReLUs to decrease computational complexity</li>
+<li>Dropout of learned features (activations) in layers to decrease overfitting</li>
+<li>Skip connection with max pooling to add most prominent residuals from features</li>
+<li>Linear layer in the end to map to prediction</li>
+<li>ADAM optimizer</li>
+</ul>
+</section>
+<section id="transfer-learning-1" class="slide level2">
+<h2>Transfer learning</h2>
+<ul>
+<li>Re-use same neural network architecture and what the former models learned</li>
+<li>Continue training to fine tune and optimize weights</li>
+<li>Recap: Developed and improved this on age prediction using author’s model and weights</li>
+<li>In dev: exchange linear layer with dense layer and sigmoid</li>
+<li>In dev: predict cardio vascular complications using same neural network and what it learned</li>
+<li>In dev: use on third dataset with ECGs for patients with diabetes complications</li>
+</ul>
+</section>
+<section id="application-and-use-case" class="slide level2">
+<h2>Application and use case</h2>
+<p>Application - Predict age from ECG with residual neural network (500hz ECGs from Code-15% finetuned on PTB-XL)</p>
+<p>Application in development - Use same model and transfer learning to predict cardiovascular complications related to diabetes</p>
+</section>
+<section id="find-the-code-experiment-contribute" class="slide level2">
+<h2>Find the code, experiment, contribute!</h2>
 
 <img src="images/logo.png" class="slide-logo r-stretch"><div class="footer footer-default">
 
 </div>
-</section>
+</section></section>
+
     </div>
   </div>
 
   <script>window.backupDefine = window.define; window.define = undefined;</script>
-  <script src="presentation_files/libs/revealjs/dist/reveal.js"></script>
+  <script src="index_files/libs/revealjs/dist/reveal.js"></script>
   <!-- reveal.js plugins -->
-  <script src="presentation_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
-  <script src="presentation_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
-  <script src="presentation_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
-  <script src="presentation_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
-  <script src="presentation_files/libs/revealjs/plugin/quarto-support/support.js"></script>
+  <script src="index_files/libs/revealjs/plugin/quarto-line-highlight/line-highlight.js"></script>
+  <script src="index_files/libs/revealjs/plugin/pdf-export/pdfexport.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/reveal-menu/quarto-menu.js"></script>
+  <script src="index_files/libs/revealjs/plugin/quarto-support/support.js"></script>
   
 
-  <script src="presentation_files/libs/revealjs/plugin/notes/notes.js"></script>
-  <script src="presentation_files/libs/revealjs/plugin/search/search.js"></script>
-  <script src="presentation_files/libs/revealjs/plugin/zoom/zoom.js"></script>
-  <script src="presentation_files/libs/revealjs/plugin/math/math.js"></script>
+  <script src="index_files/libs/revealjs/plugin/notes/notes.js"></script>
+  <script src="index_files/libs/revealjs/plugin/search/search.js"></script>
+  <script src="index_files/libs/revealjs/plugin/zoom/zoom.js"></script>
+  <script src="index_files/libs/revealjs/plugin/math/math.js"></script>
   <script>window.define = window.backupDefine; window.backupDefine = undefined;</script>
 
   <script>

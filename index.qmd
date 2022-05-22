@@ -1,0 +1,162 @@
+---
+title: "Transfer Learning to Predict Age"
+author: "Thor Larsen & Anders Askeland"
+format:
+  revealjs:
+    slide-number: true
+    theme: simple
+    controls : true
+    transition: slide
+    logo: images/logo.png
+    background-transition: fade
+    preview-links: auto
+
+output: 
+  revealjs::revealjs_presentation:
+title-slide-attributes:
+  data-background-image: background.png
+  data-background-size: cover
+---
+
+## Datasets
+
+```{css}
+.scrollable::-webkit-scrollbar {
+  display: none;
+}
+```
+
+PTB-XL
+
+![](images/ptb-xl.png) 
+Code-15% 
+![](images/code-15.png)
+
+## Residual neural network ^[[<em>Lima et. al.</em>](https://github.com/antonior92/ecg-age-prediction)]
+
+
+![](images/ribeiro_automatic_2020.png)
+
+## Transfer learning^[[<em>Lima et. al.</em>](https://github.com/antonior92/ecg-age-prediction)]
+
+![](images/he_deep_2015.png)
+
+# Predict age
+
+1.  Training
+2.  Prediction
+
+## Training results {.smaller .scrollable transition="slide"}
+
+::: panel-tabset
+### Plot
+
+```{r}
+library(magrittr)
+df <- readRDS("data/df_history.rds")
+
+train_combined <- df %>%
+    dplyr::rename("Model" = dataset) %>%
+    ggplot2::ggplot(ggplot2::aes(x = epoch, y = valid_error, col = Model)) +
+    ggplot2::geom_line(size = .6) +
+    ggplot2::geom_segment(ggplot2::aes(xend=max(epoch), 
+                                       yend = valid_error),
+                                       linetype = 2) +
+    ggplot2::geom_text(ggplot2::aes(x = max(epoch) + .1, 
+                                    label = sprintf("%5.0f", valid_error)),
+                       hjust = 0) +
+    ggplot2::labs(title = "Training accuracy on PTB-XL dataset (Epoch: {round(frame_along, 0)})",
+                  y = 'Accuracy (Error percentage)', 
+                  x = 'Epoch') +
+    ggplot2::theme_bw(base_size = 18) +
+    ggplot2::expand_limits(x = c(0, 70)) +
+    ggplot2::theme(panel.border = ggplot2::element_blank(),
+                       axis.line = ggplot2::element_line(colour = "black")) +
+    ggplot2::scale_color_manual(labels = c("Trained from scratch", "Fine tuned"),
+                     values = c("red", "blue")) +
+    gganimate::transition_reveal(epoch) +
+    gganimate::view_follow(fixed_y = T) +
+    ggplot2::theme(text = ggplot2::element_text(color = "#22211d"),
+                   plot.subtitle = ggplot2::element_text(color = "#4e4d47"))
+
+gganimate::animate(train_combined, duration = 30, start_pause = 10, end_pause = 60)
+```
+
+### Data
+
+```{r}
+knitr::kable(df)
+
+
+```
+:::
+
+## Prediction results {.smaller .scrollable transition="slide"}
+
+::: panel-tabset
+### Plot
+
+```{r}
+library(magrittr)
+positions <- c("New", "Tune", "Original")
+
+df <- readRDS("data/df_predictions.rds")
+df %>%
+    dplyr::rename("Model" = dataset) %>%
+    ggplot2::ggplot(ggplot2::aes(x = Model, y = error, fill=Model)) +
+    ggplot2::geom_violin() +
+    ggplot2::labs(title = "Prediction accuracy on PTB-XL",
+                  y = 'Accuracy (Error percentage)', 
+                  x = 'Model used') +
+    ggplot2::theme_bw(base_size = 18) +
+    ggplot2::scale_x_discrete(limits = positions, labels=c("Trained from scratch", "Fine tuned", "Lima et. al.")) +
+    ggplot2::theme(panel.border = ggplot2::element_blank(),
+                       axis.line = ggplot2::element_line(colour = "black"),
+                   text = ggplot2::element_text(color = "#22211d"),
+                   plot.subtitle = ggplot2::element_text(color = "#4e4d47"),
+                   legend.position="none") +
+    ggplot2::scale_color_manual(labels = c("Trained from scratch", "Fine tuned", "New"),
+                     values = c("red", "blue", "yellow"))
+```
+
+### Data
+
+```{r}
+knitr::kable(df)
+```
+:::
+
+# More...
+
+-   [Simple application to predict age from ECG](https://github.com/ddECG/ECG-Predictor)
+-   [This presentation](https://github.com/ddECG/Presentation)
+-   [Open source](https://github.com/ddECG)
+
+# Read more
+
+## Model's architecture
+
+-   By using a residual neural network we get a well performing model
+-   Convolution to create a feature map
+-   Batch normalization and ReLUs to decrease computational complexity
+-   Dropout of learned features (activations) in layers to decrease overfitting
+-   Skip connection with max pooling to add most prominent residuals from features
+-   Linear layer in the end to map to prediction
+-   ADAM optimizer
+
+## Transfer learning
+
+-   Re-use same neural network architecture and what the former models learned
+-   Continue training to fine tune and optimize weights
+-   Recap: Developed and improved this on age prediction using author's model and weights
+-   In dev: exchange linear layer with dense layer and sigmoid
+-   In dev: predict cardio vascular complications using same neural network and what it learned
+-   In dev: use on third dataset with ECGs for patients with diabetes complications
+
+## Application and use case
+
+Application - Predict age from ECG with residual neural network (500hz ECGs from Code-15% finetuned on PTB-XL)
+
+Application in development - Use same model and transfer learning to predict cardiovascular complications related to diabetes
+
+## Find the code, experiment, contribute!
