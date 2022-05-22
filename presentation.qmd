@@ -97,9 +97,40 @@ df %>%
 knitr::kable(df)
 ```
 ::: 
-# More...
+### Model's architecture 
 
+<<<<<<< HEAD
 Predict age from ECG - Application
+=======
+TODO: Insert image/lima_deep_2021.png and image/he_deep_2015.png image side by side
+
+* By using a residual neural network we get a well performing model 
+* Convolution to create a feature map
+* Batch normalization and ReLUs to decrease computational complexity
+* Dropout of learned features (activations) in layers to decrease overfitting 
+* Skip connection with max pooling to add most prominent residuals from features
+* Linear layer in the end to map to prediction
+* ADAM optimizer
+
+### Transfer learning
+
+TODO: Insert image/ribeiro_automatic_2020.png
+
+* Re-use same neural network architecture and what the former models learned
+* Continue training to fine tune and optimize weights
+* Recap: Developed and improved this on age prediction using author's model and weights
+* In dev: exchange linear layer with dense layer and sigmoid
+* In dev: predict cardio vascular complications using same neural network and what it learned
+* In dev: use on third dataset with ECGs for patients with diabetes complications
+
+### Application and use case
+
+Application - Predict age from ECG with residual neural network (500hz ECGs from Code-15% finetuned on PTB-XL)
+
+Application in development - Use same model and transfer learning to predict cardiovascular complications related to diabetes
+
+### Find the code, experiment, contribute!
+>>>>>>> 0a1ef1ade1c9847e15dea604c2997aca414d9949
 
 Source code - [Github](https://github.com/ddECG)
 
