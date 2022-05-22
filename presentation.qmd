@@ -33,13 +33,13 @@ PTB-XL
 
 Difference in accuracy between:
 
--   Fine-tuned model
+-   Fine-tuned model (<em>Lima </em>)
 
 -   Original model
 
 -   New model
 
-## Training {.smaller .scrollable transition="slide"}
+## Training results {.smaller .scrollable transition="slide"}
 ::: {.panel-tabset}
 ### Plot
 ```{r}
@@ -55,8 +55,7 @@ train_combined <- df %>%
     ggplot2::geom_text(ggplot2::aes(x = max(epoch) + .1, 
                                     label = sprintf("%5.0f", valid_error)),
                        hjust = 0) +
-    ggplot2::labs(title = "Training accuracy",
-                  subtitle = 'Epoch: {round(frame_along, 0)} ', 
+    ggplot2::labs(title = "Training accuracy on PTB-XL dataset. Epoch: {round(frame_along, 0)}",
                   y = 'Accuracy (Error percentage)', 
                   x = 'Epoch') +
     ggplot2::theme_bw() +
@@ -80,7 +79,7 @@ knitr::kable(df)
 
 ```
 :::
-## Prediction {.smaller .scrollable transition="slide"}
+## Prediction results {.smaller .scrollable transition="slide"}
 ::: {.panel-tabset}
 ### Plot
 ```{r}
@@ -100,7 +99,7 @@ knitr::kable(df)
 ::: 
 # More...
 
-Application - Predict age from ECG
+Predict age from ECG - Application
 
 Source code - [Github](https://github.com/ddECG)
 

@@ -84,7 +84,7 @@ train_combined <- df_history %>%
 
 train_combined_gif <- gganimate::animate(train_combined, duration=30, end_pause = 60)
 
-# Seperate gifs
+# Tune gifs
 train_tune <- df_history %>%
     dplyr::filter(dataset == "Tune") %>%
     ggplot2::ggplot(ggplot2::aes(x = epoch, y = valid_error)) +
@@ -111,7 +111,9 @@ train_tune <- df_history %>%
                    plot.title = ggplot2::element_text(size=20),
                    plot.subtitle = ggplot2::element_text(size=15, 
                                                          color = "#4e4d47"))
+train_tune_gif <- gganimate::animate(train_tune)
 
+# New gif
 train_new <- df_history %>%
     dplyr::filter(dataset == "New") %>%
     ggplot2::ggplot(ggplot2::aes(x = epoch, y = valid_error)) +
@@ -139,7 +141,18 @@ train_new <- df_history %>%
                    plot.subtitle = ggplot2::element_text(size=15, 
                                                          color = "#4e4d47"))
 
+train_new_gif <- gganimate::animate(train_new)
 
+# Combine
+a_mgif <- magick::image_read(train_tune_gif)
+b_mgif <- magick::image_read(train_new_gif)
+
+new_gif <- magick::image_append(c(a_mgif[1], b_mgif[1]))
+for(i in 2:100){
+  combined <- magick::image_append(c(a_mgif[i], b_mgif[i]))
+  new_gif <- c(new_gif, combined)
+}
+new_gif
 ```
 
 ### Predictions

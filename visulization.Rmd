@@ -172,3 +172,28 @@ df_predictions %>%
     ggplot2::ylab("Accuracy (Error percentage)") +
     ggplot2::xlab("Model")
 ```
+
+
+```{r}
+
+df_predictions %>%
+    ggplot2::ggplot(ggplot2::aes(x = true_age, y = predicted_age, color = dataset)) +
+    ggplot2::geom_point() +
+    ggplot2::ylab("Predicted age") +
+    ggplot2::xlab("True age")
+```
+```{r}
+  df_predictions %>%
+    ggplot2::ggplot() +
+    ggplot2::geom_point(aes(x=true_age, y=predicted_age, color = dataset)) +
+    ggplot2::geom_line(aes(x=true_age, y=predicted_age), color="#990000") +
+    ggplot2::scale_x_continuous(name="Cumulative share of X", limits=c(0,100)) + 
+    ggplot2::scale_y_continuous(name="Cumulative share of Y", limits=c(0,100)) +
+    ggplot2::geom_abline()
+```
+
+
+```{r}
+
+```
+
