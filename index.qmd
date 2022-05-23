@@ -7,7 +7,7 @@ format:
     theme: simple
     controls : true
     transition: slide
-    logo: images/logo.png
+    logo: qr.png
     background-transition: fade
     preview-links: auto
 
