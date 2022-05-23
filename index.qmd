@@ -105,6 +105,7 @@ df %>%
     dplyr::rename("Model" = dataset) %>%
     ggplot2::ggplot(ggplot2::aes(x = Model, y = error, fill=Model)) +
     ggplot2::geom_violin() +
+    ggplot2::geom_boxplot(width=0.1, color="grey", alpha=0.2) +
     ggplot2::labs(title = "Prediction accuracy on PTB-XL",
                   y = 'Accuracy (Error percentage)', 
                   x = 'Model used') +
