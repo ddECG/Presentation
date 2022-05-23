@@ -37,10 +37,6 @@ Code-15%
 
 ![](images/ribeiro_automatic_2020.png)
 
-## Transfer learning^[[<em>Lima et. al.</em>](https://github.com/antonior92/ecg-age-prediction)]
-
-![](images/he_deep_2015.png)
-
 # Predict age
 
 1.  Training
@@ -99,8 +95,20 @@ knitr::kable(df)
 ```{r}
 library(magrittr)
 positions <- c("New", "Tune", "Original")
-
 df <- readRDS("data/df_predictions.rds")
+mean_new <- df %>% 
+    dplyr::filter(dataset == "New") %>%
+    dplyr::summarise(mean = mean(error)) %>%
+    dplyr::pull() 
+mean_tune <- df %>% 
+    dplyr::filter(dataset == "Tune") %>%
+    dplyr::summarise(mean = mean(error)) %>%
+    dplyr::pull() 
+mean_old <- df %>% 
+    dplyr::filter(dataset == "Original") %>%
+    dplyr::summarise(mean = mean(error)) %>%
+    dplyr::pull() 
+
 df %>%
     dplyr::rename("Model" = dataset) %>%
     ggplot2::ggplot(ggplot2::aes(x = Model, y = error, fill=Model)) +
@@ -110,6 +118,18 @@ df %>%
                   y = 'Accuracy (Error percentage)', 
                   x = 'Model used') +
     ggplot2::theme_bw(base_size = 18) +
+    ggplot2::annotate(geom = "curve", x = 1.25, y = 40, xend = 1, yend = 15,
+                      curvature = .3, arrow = ggplot2::arrow(length = ggplot2::unit(2, "mm"))) +
+    ggplot2::annotate(geom = "text", x = 1.27, y = 40, label = paste("Mean:", round(mean_new,0), "%"),
+                      hjust = "left") +
+        ggplot2::annotate(geom = "curve", x = 2.25, y = 40, xend = 2, yend = 15,
+                      curvature = .3, arrow = ggplot2::arrow(length = ggplot2::unit(2, "mm"))) +
+    ggplot2::annotate(geom = "text", x = 2.27, y = 40, label = paste("Mean:", round(mean_tune,0), "%"),
+                      hjust = "left") +
+            ggplot2::annotate(geom = "curve", x = 3.25, y = 40, xend = 3, yend = 15,
+                      curvature = .3, arrow = ggplot2::arrow(length = ggplot2::unit(2, "mm"))) +
+    ggplot2::annotate(geom = "text", x = 3.27, y = 40, label = paste("Mean:", round(mean_old,0), "%"),
+                      hjust = "left") +
     ggplot2::scale_x_discrete(limits = positions, labels=c("Trained from scratch", "Fine tuned", "Lima et. al.")) +
     ggplot2::theme(panel.border = ggplot2::element_blank(),
                        axis.line = ggplot2::element_line(colour = "black"),
